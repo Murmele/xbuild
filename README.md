@@ -2,6 +2,21 @@
 xbuild is a build tool for rust projects with support for cross compiling and publishing to all
 major stores. The goal of xbuild is making native app development as easy as web development.
 
+To configure the build of the packages for the platforms a `manifest.yaml` file must be created in the working directory. To configure for an android apk check all options of `AndroidManifest` struct (https://github.com/rust-mobile/xbuild/blob/master/apk/src/manifest.rs#L8).
+
+To set internet permissions for android for example:
+```yaml
+android:
+  manifest:
+    sdk:
+      min_sdk_version: 23
+      target_sdk_version: 36
+    # See https://developer.android.com/guide/topics/manifest/uses-permission-element
+    uses_permission:
+      - name: "android.permission.INTERNET"
+      - name: "android.permission.ACCESS_NETWORK_STATE"
+```
+
 ## Getting started
 Install `xbuild`:
 ```sh
