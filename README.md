@@ -45,6 +45,20 @@ info: component 'rust-std' for target 'aarch64-linux-android' is up to date
 
 ![x](https://user-images.githubusercontent.com/741807/162616805-30b48faa-84f0-4fec-851a-4c94fd35c6bd.png)
 
+### Version compatibility (Android gradle)
+
+When using gradle with android make sure you have the correct versions installed (https://kotlinlang.org/docs/gradle-configure-project.html#kotlin-gradle-plugin-data-in-a-project)
+
+Tested:
+
+| Software      |  Version   |
+| ------------- | ---------- |
+| java          |    17      |
+| Gradle        |    8.1.1   |
+| AGP Plugin    |    7.3.0   |
+| Kotlin Plugin |   1.7.20   |
+
+
 ## Troubleshooting
 
 ### Command not found
