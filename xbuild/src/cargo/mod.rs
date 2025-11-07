@@ -38,7 +38,7 @@ impl Cargo {
             .map(|path| {
                 if path.file_name() != Some(OsStr::new("Cargo.toml")) || !path.is_file() {
                     Err(anyhow::anyhow!(
-                        "The manifest-path must be a path to a Cargo.toml file"
+                        "The manifest-path '{:?}' must be a path to a Cargo.toml file", path
                     ))
                 } else {
                     Ok(path)
