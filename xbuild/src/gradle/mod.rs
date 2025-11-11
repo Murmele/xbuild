@@ -50,10 +50,6 @@ pub fn build(env: &BuildEnv, libraries: Vec<(Target, PathBuf)>, out: &Path) -> R
     let config = env.config().android();
     let mut manifest = config.manifest.clone();
 
-    if !config.assets.is_empty() {
-        std::fs::OpenOptions::new().write(true).append(true).open(gradle.join("settings.gradle"))?.write(r#"include ':baseAssets'"#.as_bytes())?;
-    }
-
     let package = manifest.package.take().unwrap_or_default();
     let target_sdk = manifest.sdk.target_sdk_version.take().unwrap();
     let min_sdk = manifest.sdk.min_sdk_version.take().unwrap();
@@ -107,6 +103,8 @@ pub fn build(env: &BuildEnv, libraries: Vec<(Target, PathBuf)>, out: &Path) -> R
     let _ = std::fs::remove_dir_all(&base_assets);
 
     if !config.assets.is_empty() {
+        std::fs::OpenOptions::new().write(true).append(true).open(gradle.join("settings.gradle"))?.write(r#"include ':baseAssets'"#.as_bytes())?;
+
         std::fs::create_dir_all(&base_assets)?;
         let assets = format!(
             r#"
