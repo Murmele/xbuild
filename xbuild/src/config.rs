@@ -430,6 +430,22 @@ pub struct AndroidConfig {
     pub manifest: AndroidManifest,
     #[serde(default)]
     pub dependencies: Vec<String>,
+    /// The gradle plugin version which shall be set in the main build.gradle file
+    /// Make sure it is compatible with the installed gradle version!
+    /// Depending on the plugin version a minimum gradle version must be available
+    /// Depending on the api level a minimum gradle plugin version is required
+    /// https://developer.android.com/build/releases/gradle-plugin?#kts
+    /// 
+    /// Recommendation:
+    /// 1) Select desired api level
+    /// 2) Determine minium gradle plugin version and use at least that version (See url above)
+    /// 3) Determin minium gradle version (See url above)
+    #[serde(default)]
+    pub gradle_plugin_version: Option<String>,
+    /// The kotlin plugin version which shall be set in the main build.gradle file
+    /// Determine version from the gradle plugin version using https://developer.android.com/build/kotlin-support
+    #[serde(default)]
+    pub kotlin_plugin_version: Option<String>,
     /// Defaults to [`false`], but uses [`true`] when the user builds a format that requires
     /// `gradle` (i.e. [`Format::Aab`]).
     #[serde(default)]
