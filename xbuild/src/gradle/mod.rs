@@ -5,7 +5,6 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-static BUILD_GRADLE: &[u8] = include_bytes!("./build.gradle");
 static GRADLE_PROPERTIES: &[u8] = include_bytes!("./gradle.properties");
 static SETTINGS_GRADLE: &[u8] = include_bytes!("./settings.gradle");
 static IC_LAUNCHER: &[u8] = include_bytes!("./ic_launcher.xml");
@@ -42,8 +41,25 @@ pub fn build(env: &BuildEnv, libraries: Vec<(Target, PathBuf)>, out: &Path) -> R
     let jnilibs = main.join("jniLibs");
     let res = main.join("res");
 
+    let gradle_plugin_version = env.config().android().gradle_plugin_version.as_ref().map(|s| s.as_str()).unwrap_or("7.3.0");
+    let kotlin_plugin_version = env.config().android().kotlin_plugin_version.as_ref().map(|s| s.as_str()).unwrap_or("1.7.20");
+
+    let build_gradle = format!(r#"
+        // Top-level build file where you can add configuration options common to all sub-projects/modules.
+        plugins {{
+            id 'com.android.application' version '{gradle_plugin_version}' apply false
+            id 'com.android.library' version '{gradle_plugin_version}' apply false
+            id 'org.jetbrains.kotlin.android' version '{kotlin_plugin_version}' apply false
+        }}
+
+        task clean(type: Delete) {{
+            delete rootProject.buildDir
+        }}
+    "#
+    );
+
     std::fs::create_dir_all(&kotlin)?;
-    std::fs::write(gradle.join("build.gradle"), BUILD_GRADLE)?;
+    std::fs::write(gradle.join("build.gradle"), build_gradle)?;
     std::fs::write(gradle.join("gradle.properties"), GRADLE_PROPERTIES)?;
     std::fs::write(gradle.join("settings.gradle"), SETTINGS_GRADLE)?;
 

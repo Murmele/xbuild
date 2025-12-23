@@ -40,7 +40,7 @@
             "env": {
                 //"X_PEM": ""
             },
-            "args": ["build", "--release", "--platform", "android", "--format", "apk", "--arch", "arm64"], // , "--pem", "/home/martin/Dokumente/pem"
+            "args": ["build", "--release", "--platform", "android", "--format", "apk", "--arch", "arm64"], // , "--pem", "$USER/Dokumente/pem"
             "cwd": "${workspaceFolder}/../weather"
         },
     ]
