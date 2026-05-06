@@ -172,7 +172,7 @@ impl Config {
             application.activities.push(Activity::default());
         }
 
-        let activity = application.activities.get_mut(0).unwrap();
+        let activity = application.activities.get_mut(0).expect("At least one activity must be specified!");
         activity.config_changes.get_or_insert_with(|| {
             [
                 "orientation",
@@ -459,6 +459,7 @@ pub struct AndroidConfig {
     /// `gradle` (i.e. [`Format::Aab`]).
     #[serde(default)]
     pub gradle: Option<bool>,
+    /// cross-platform WebView rendering library [wry](https://github.com/tauri-apps/wry)
     #[serde(default)]
     pub wry: bool,
     #[serde(default)]
