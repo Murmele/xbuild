@@ -13,7 +13,7 @@ pub(crate) struct Adb(PathBuf);
 
 impl Adb {
     pub fn which() -> Result<Self> {
-        Ok(Self(which::which(exe!("adb"))?))
+        Ok(Self(which::which(exe!("adb")).context("adb executable not found")?))
     }
 
     fn adb(&self, device: &str) -> Command {
